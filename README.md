@@ -45,7 +45,8 @@ glibc ABI, so a future upgrade may require a new shared recipe and APK.
 
 First boot initializes and populates the Arch Linux ARM signing keyring, then
 runs `pacman -Syu` and installs desktop components. Package signatures stay
-enabled. The mirror is owned by this repository in `guest/mirrorlist`.
+enabled. The default mirrors are owned by this repository in `guest/mirrorlist`
+and `guest/archlinuxcn.conf`. Both use Tsinghua TUNA.
 Linux kernel and firmware packages are removed through pacman because the APK
 uses Android's kernel. It does not boot systemd. The systemd-sysusers, systemd-tmpfiles and OpenSSH service-restart marking
 hooks are masked: service-account creation and Linux boot management are
@@ -81,3 +82,21 @@ records, pacman install/upgrade/scriptlets/removal, runtime identity and nested
 exec, and Turnip hardware GLX plus Wayland EGL presentation and resize. The
 fresh transaction completed without package errors under the policy above.
 These checks do not certify every application or future rolling update.
+
+## Arch Linux Chinese Community repository
+
+The APK enables `archlinuxcn` by default, including when upgrading an existing
+installation. First boot imports trust from the packaged Arch keyring and
+installs `archlinuxcn-keyring` with package signature checks enabled. It preserves
+an existing `[archlinuxcn]` stanza and its mirror selection. The repository is
+appended after the standard Arch Linux ARM repositories.
+
+This repository supplies native aarch64 packages absent from the standard ARM
+repositories, including Blender. The APK does not bundle Blender.
+
+On X300, the community Blender 5.2.1 package currently needs USD 26.05;
+USD 26.08 produces an undefined-symbol error. Its Vulkan startup also requires
+vertex pipeline stores and atomics, which the Mali driver does not advertise.
+Blender installation alone therefore does not establish working GPU rendering.
+
+Repository setup follows the [TUNA documentation](https://mirrors.tuna.tsinghua.edu.cn/help/archlinuxcn/).

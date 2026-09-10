@@ -50,9 +50,24 @@ if [ ! -f "$root/etc/pacman.d/gnupg/ardesk-populated" ]; then
     pacman-key --populate archlinuxarm
     touch "$root/etc/pacman.d/gnupg/ardesk-populated"
 fi
+# Refresh the product's default repository on APK upgrades too. Preserve a
+# repository already configured by the user, including their chosen mirror.
+if ! grep -q '^\[archlinuxcn\]$' "$root/etc/pacman.conf"; then
+    printf '\n' >> "$root/etc/pacman.conf"
+    cat "$root/usr/lib/ardesk/guest/archlinuxcn.conf" >> "$root/etc/pacman.conf"
+fi
+cn_setup=
+if ! pacman -Q archlinuxcn-keyring >/dev/null 2>&1; then
+    echo 'ARDESK:正在初始化 Arch Linux 中文社区软件源…'
+    # The CN keyring is signed by an Arch packager. Trust it through the
+    # packaged Arch keyring, then install CN's keyring with signatures enabled.
+    pacman-key --populate archlinux
+    pacman -Sy --needed --noconfirm archlinuxcn-keyring
+    cn_setup=1
+fi
 set -- xterm ttf-dejavu noto-fonts-cjk fontconfig xorg-xrdb dbus \
     at-spi2-core wayland libx11 libxcb libxxf86vm
-if ! pacman -Q "$@" >/dev/null 2>&1; then
+if [ -n "$cn_setup" ] || ! pacman -Q "$@" >/dev/null 2>&1; then
     echo 'ARDESK:正在更新 Arch ARM 并安装桌面组件…'
     pacman -Syyu --needed --noconfirm "$@"
 fi
