@@ -94,9 +94,22 @@ appended after the standard Arch Linux ARM repositories.
 This repository supplies native aarch64 packages absent from the standard ARM
 repositories, including Blender. The APK does not bundle Blender.
 
-On X300, the community Blender 5.2.1 package currently needs USD 26.05;
-USD 26.08 produces an undefined-symbol error. Its Vulkan startup also requires
-vertex pipeline stores and atomics, which the Mali driver does not advertise.
-Blender installation alone therefore does not establish working GPU rendering.
+X300 has been tested with the original signed packages `blender 17:5.2.1-1`
+and `usd 26.05-4`. USD 26.08 is incompatible with that Blender build and causes
+an undefined-symbol error. On the tested device, `IgnorePkg = blender usd`
+keeps this pair together; remove that hold only when updating to a compatible
+pair. This hold is not part of the APK's default package configuration.
+
+Run the original application with `blender --gpu-backend vulkan`. The shared
+libhybris fork compensates for the tested G1-Ultra driver's missing vertex
+storage behavior. Startup, a 17-mesh model, fullscreen/restore, save/reopen and
+Workbench rendering passed. Eevee still produces an almost-black image and
+is not considered working. Blender's executable and packaged resources are
+unchanged. See the core's `tests/blender/README.md` and libhybris's
+`tests/baseline/vertex-stores.md` for scope and reproduction.
+
+The tested package also needed `python-cattrs` for its asset-library module.
+These results concern this specific package/driver pair, not arbitrary future
+rolling updates.
 
 Repository setup follows the [TUNA documentation](https://mirrors.tuna.tsinghua.edu.cn/help/archlinuxcn/).
