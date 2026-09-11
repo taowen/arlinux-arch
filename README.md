@@ -1,11 +1,11 @@
-# ardesk-arch
+# arlinux-arch
 
-An independent Android Linux desktop application built from Ardesk's shared
+An independent Android Linux desktop application built from Arlinux's shared
 Android library, process runtime and graphics stack.
 
-Application ID: `io.taowen.ardesk.arch`. This APK has its own
+Application ID: `io.taowen.arlinux.arch`. This APK has its own
 Android UID, private rootfs, package database and home directory. It does not
-replace the older `io.taowen.ardesk` application.
+replace the older `io.taowen.arlinux` application.
 
 ## Build
 
@@ -15,16 +15,16 @@ export JAVA_HOME=/path/to/jdk17
 export ANDROID_HOME=/path/to/android-sdk
 export HYBRIS_LIB_DIR=/path/to/libhybris/install/usr/lib/hybris
 # Build the shared native graphics components once:
-third_party/ardesk/tools/build.sh ndk
-third_party/ardesk/tools/build.sh mesa
+third_party/arlinux/tools/build.sh ndk
+third_party/arlinux/tools/build.sh mesa
 ./build.sh
 ```
 
-The output is `build/ardesk-arch-debug.apk`. `--prepare-only` builds userspace
+The output is `build/arlinux-arch-debug.apk`. `--prepare-only` builds userspace
 assets; `--apk-only` assembles existing assets. For development, set
-`ARDESK_DIR=/path/to/ardesk` to use a separate working checkout.
+`ARLINUX_DIR=/path/to/arlinux` to use a separate working checkout.
 Host requirements and the application input contract are described in
-[Ardesk](https://github.com/taowen/ardesk).
+[Arlinux](https://github.com/taowen/arlinux).
 
 `product.json` selects package identity, glibc recipe and library/module paths.
 `tools/seed.sh` produces the distribution rootfs. `guest/first-boot.sh` owns
@@ -64,17 +64,17 @@ The application remains confined by Android's UID and SELinux policy.
 After installing and starting the APK on a device:
 
 ```sh
-ARDESK_DIR=third_party/ardesk tests/test-pacman-device.py --serial DEVICE
-third_party/ardesk/tests/test-product-device.py --product . --serial DEVICE
-third_party/ardesk/tests/test-teapot-device.py --serial DEVICE \
-  --package io.taowen.ardesk.arch --gpu turnip
+ARLINUX_DIR=third_party/arlinux tests/test-pacman-device.py --serial DEVICE
+third_party/arlinux/tests/test-product-device.py --product . --serial DEVICE
+third_party/arlinux/tests/test-teapot-device.py --serial DEVICE \
+  --package io.taowen.arlinux.arch --gpu turnip
 ```
 
 The pacman test creates two versions of a disposable package and checks native
 install, upgrade, scriptlets, virtual UID and removal. Graphical screenshot
 checks need unobscured windows; hide the extra-key bar with a three-finger
 swipe down, or start the debug Activity with
-`--ez io.taowen.ardesk.extra.HIDE_EXTRA_KEYS true`.
+`--ez io.taowen.arlinux.extra.HIDE_EXTRA_KEYS true`.
 
 Validated on 2026-09-10 using a Redmi K40 (Android 13, Adreno 650): fresh
 signed package bootstrap to xterm, APK update preserving home and package

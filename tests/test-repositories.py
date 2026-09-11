@@ -16,9 +16,9 @@ with tempfile.TemporaryDirectory() as directory:
     (root / 'etc').mkdir(parents=True)
     config = root / 'etc/pacman.conf'
     config.write_text('[options]\nSigLevel = Required DatabaseOptional\n[core]\nServer = https://example.invalid/core\n')
-    guest = root / 'usr/lib/ardesk/guest'
+    guest = root / 'usr/lib/arlinux/guest'
     shutil.copytree(product / 'guest', guest)
-    platform = root / 'usr/lib/ardesk-platform'
+    platform = root / 'usr/lib/arlinux-platform'
     platform.mkdir(parents=True)
     (root / 'usr/bin').mkdir()
     ldconfig = platform / 'ldconfig'

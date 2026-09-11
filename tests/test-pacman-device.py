@@ -10,7 +10,7 @@ import subprocess
 import tarfile
 
 product = Path(__file__).resolve().parents[1]
-core = Path(os.environ.get('ARDESK_DIR', product / 'third_party/ardesk')).resolve()
+core = Path(os.environ.get('ARLINUX_DIR', product / 'third_party/arlinux')).resolve()
 p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('--serial', required=True)
 a = p.parse_args()
@@ -23,21 +23,21 @@ def guest(*args, check=True):
     return subprocess.run(base + ['exec', *args], check=check, text=True, capture_output=True)
 
 def archive(version):
-    out = build / ('ardesk-package-gate-' + version + '-1-aarch64.pkg.tar.gz')
+    out = build / ('arlinux-package-gate-' + version + '-1-aarch64.pkg.tar.gz')
     files = {
-        '.PKGINFO': f'pkgname = ardesk-package-gate\npkgver = {version}-1\npkgdesc = Ardesk ALPM regression\nurl = https://github.com/taowen/ardesk-arch\nbuilddate = 0\npackager = Ardesk test\nsize = 100\narch = aarch64\nlicense = GPL\n',
+        '.PKGINFO': f'pkgname = arlinux-package-gate\npkgver = {version}-1\npkgdesc = Arlinux ALPM regression\nurl = https://github.com/taowen/arlinux-arch\nbuilddate = 0\npackager = Arlinux test\nsize = 100\narch = aarch64\nlicense = GPL\n',
         '.INSTALL': '''post_install() {
-    /usr/bin/bash -c 'id -u > /var/lib/ardesk-package-gate/uid'
+    /usr/bin/bash -c 'id -u > /var/lib/arlinux-package-gate/uid'
 }
 post_upgrade() {
     post_install
-    echo upgraded > /var/lib/ardesk-package-gate/upgrade
+    echo upgraded > /var/lib/arlinux-package-gate/upgrade
 }
 post_remove() {
-    echo removed > /tmp/ardesk-package-gate-removed
+    echo removed > /tmp/arlinux-package-gate-removed
 }
 ''',
-        'var/lib/ardesk-package-gate/version': version + '\n',
+        'var/lib/arlinux-package-gate/version': version + '\n',
     }
     with tarfile.open(out, 'w:gz') as tar:
         for name, data in files.items():
@@ -52,19 +52,19 @@ post_remove() {
 
 guest('/usr/bin/bash', '-c',
       'before=$(id -u); test "$before" != 0; pacman --version >/dev/null; test "$(id -u)" = "$before"')
-if guest('/usr/bin/pacman', '-Q', 'ardesk-package-gate', check=False).returncode == 0:
-    raise SystemExit('Remove an existing ardesk-package-gate test package before running')
+if guest('/usr/bin/pacman', '-Q', 'arlinux-package-gate', check=False).returncode == 0:
+    raise SystemExit('Remove an existing arlinux-package-gate test package before running')
 try:
     for version in ('1.0', '2.0'):
         result = guest('/usr/bin/pacman', '-U', '--noconfirm', archive(version))
         print(result.stdout, end=''); print(result.stderr, end='')
-        assert guest('/usr/bin/cat', '/var/lib/ardesk-package-gate/version').stdout.strip() == version
-        assert guest('/usr/bin/cat', '/var/lib/ardesk-package-gate/uid').stdout.strip() == '0'
-    assert guest('/usr/bin/cat', '/var/lib/ardesk-package-gate/upgrade').stdout.strip() == 'upgraded'
+        assert guest('/usr/bin/cat', '/var/lib/arlinux-package-gate/version').stdout.strip() == version
+        assert guest('/usr/bin/cat', '/var/lib/arlinux-package-gate/uid').stdout.strip() == '0'
+    assert guest('/usr/bin/cat', '/var/lib/arlinux-package-gate/upgrade').stdout.strip() == 'upgraded'
 finally:
-    result = guest('/usr/bin/pacman', '-Rns', '--noconfirm', 'ardesk-package-gate', check=False)
+    result = guest('/usr/bin/pacman', '-Rns', '--noconfirm', 'arlinux-package-gate', check=False)
     print(result.stdout, end=''); print(result.stderr, end='')
-assert guest('/usr/bin/pacman', '-Q', 'ardesk-package-gate', check=False).returncode != 0
-assert guest('/usr/bin/cat', '/tmp/ardesk-package-gate-removed').stdout.strip() == 'removed'
-guest('/usr/bin/bash', '-c', 'rm -rf /var/lib/ardesk-package-gate /tmp/ardesk-package-gate-removed /var/tmp/ardesk-package-gate-*.pkg.tar.gz')
+assert guest('/usr/bin/pacman', '-Q', 'arlinux-package-gate', check=False).returncode != 0
+assert guest('/usr/bin/cat', '/tmp/arlinux-package-gate-removed').stdout.strip() == 'removed'
+guest('/usr/bin/bash', '-c', 'rm -rf /var/lib/arlinux-package-gate /tmp/arlinux-package-gate-removed /var/tmp/arlinux-package-gate-*.pkg.tar.gz')
 print('PASS pacman install / upgrade / scriptlet virtual UID / removal')

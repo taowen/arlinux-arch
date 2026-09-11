@@ -1,6 +1,6 @@
 {
-  "applicationId": "io.taowen.ardesk.arch",
-  "name": "Ardesk Arch",
+  "applicationId": "io.taowen.arlinux.arch",
+  "name": "Arlinux Arch",
   "versionCode": 1,
   "versionName": "0.1.0",
   "glibcVersion": "2.43",

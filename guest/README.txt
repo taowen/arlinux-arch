@@ -1,4 +1,4 @@
-Ardesk Arch ARM
+Arlinux Arch ARM
 
 默认包含 Arch Linux ARM 和 Arch Linux 中文社区软件源，均使用清华镜像。
 在终端安装软件：
