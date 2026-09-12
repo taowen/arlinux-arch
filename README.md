@@ -26,6 +26,14 @@ assets; `--apk-only` assembles existing assets. For development, set
 Host requirements and the application input contract are described in
 [Arlinux](https://github.com/taowen/arlinux).
 
+To select the optional anhyprland compositor, first build the Android core in
+an [anhyprland checkout](https://github.com/taowen/anhyprland/tree/android),
+then run `ANHYPRLAND_DIR=/path/to/anhyprland ARLINUX_COMPOSITOR=hyprland ./build.sh`.
+Rebuild libhybris from the current source before preparing the GPU assets;
+the [integration guide](third_party/arlinux/docs/ANHYPRLAND.md) includes the
+commands, window controls and Mali/Turnip device checks. The default compositor
+remains anlabwc.
+
 `product.json` selects package identity, glibc recipe and library/module paths.
 `tools/seed.sh` produces the distribution rootfs. `guest/first-boot.sh` owns
 package-manager configuration and desktop initialization. `native/product-policy.h`
