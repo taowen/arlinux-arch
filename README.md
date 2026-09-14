@@ -69,6 +69,11 @@ The application remains confined by Android's UID and SELinux policy.
 
 ## Checks
 
+The original Blender 5.2.1 Vulkan workflow, Eevee, Workbench and fresh-process
+reopen pass on the tested OnePlus 13 and Redmi with the current core pin.
+See the [2026-09-14 verification](docs/blender-vulkan-2026-09-14.md) for the
+two platform fixes, regression test, APK identity and screenshots.
+
 After installing and starting the APK on a device:
 
 ```sh

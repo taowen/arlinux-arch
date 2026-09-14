@@ -1,0 +1,321 @@
+{
+  "date": "2026-09-14",
+  "application_id": "io.taowen.arlinux.arch",
+  "scope": "Original Blender 5.2.1 LTS, explicit Vulkan, bounded screwdriver scene checks",
+  "source": {
+    "product_build_commit": "8a19f0d",
+    "core_commit": "fb5b21903baaf09ec9109629cf6906f35f1ed9ef",
+    "core_dirty": false,
+    "mesa_commit": "9aee2bbb23acc69d16c5ef2a895b02f342a8214c",
+    "anlabwc_commit": "f92692d8b7c65dcd89b32db02f16a6c2fef05bf6"
+  },
+  "apk_sha256": "c08d9e7ef9c04ad2a9bffa0c3a3ccb456830dccebf7cdaab1f0519a2938c62c2",
+  "devices": {
+    "redmi": {
+      "serial": "29854870",
+      "model": "M2012K11AC",
+      "kernel": "4.19.157-perf-g92c089fc2d37",
+      "android": "13",
+      "sha256": {
+        "apk": "c08d9e7ef9c04ad2a9bffa0c3a3ccb456830dccebf7cdaab1f0519a2938c62c2",
+        "compositor": "ff7634addfce1691b4d390b786bd5257f6873f7eb072e866fda5095fd54d9663",
+        "mesa": "f58b9368bddddcc91c5d0c8d57a41d2b4a8343e517bca8793b79e98265c29bb9",
+        "blender": "6d7ea7012cd80e6ced0ee029c7935c16aa2495bfffc0634f4c9c8694e0bf7c61",
+        "runtime": "4d29216dcedd8a2d519f4f1b22adf1dc9a64b8fee0a906d9c397e9ed9d59af69"
+      },
+      "workflow": {
+        "events": [
+          {
+            "event": "modeled_and_saved",
+            "windows": [
+              [
+                2320,
+                1054
+              ]
+            ],
+            "objects": 18
+          },
+          {
+            "event": "fullscreen_requested",
+            "windows": [
+              [
+                2320,
+                1054
+              ]
+            ],
+            "objects": 18
+          },
+          {
+            "event": "fullscreen_observed",
+            "windows": [
+              [
+                2320,
+                1080
+              ]
+            ],
+            "objects": 18
+          },
+          {
+            "event": "restored_observed",
+            "windows": [
+              [
+                2318,
+                1052
+              ]
+            ],
+            "objects": 18
+          },
+          {
+            "event": "reopened_verified",
+            "windows": [
+              [
+                2318,
+                1052
+              ]
+            ],
+            "objects": 18
+          }
+        ],
+        "blender": "5.2.1 LTS",
+        "backend": "VULKAN",
+        "renderer": "Turnip Adreno (TM) 650"
+      },
+      "reopen": {
+        "pid": 5794,
+        "time": 1789353200.9011924,
+        "file": "/data/user/0/io.taowen.arlinux.arch/files/home/Documents/Arlinux-Blender-Check/Unified-Screwdriver.blend",
+        "blender": "5.2.1 LTS",
+        "backend": "VULKAN",
+        "renderer": "Turnip Adreno (TM) 650",
+        "meshes": 17,
+        "vertices": 3808,
+        "faces": 2937,
+        "materials": 6,
+        "status": "PASS"
+      },
+      "processes": {
+        "push-constants": {
+          "returncode": 0,
+          "timed_out": false,
+          "child_reaped": true,
+          "elapsed_seconds": 0.06
+        },
+        "BLENDER_EEVEE": {
+          "returncode": 0,
+          "timed_out": false,
+          "child_reaped": true,
+          "elapsed_seconds": 11.103,
+          "executable_sha256": "6d7ea7012cd80e6ced0ee029c7935c16aa2495bfffc0634f4c9c8694e0bf7c61",
+          "vk_driver_files": "/data/user/0/io.taowen.arlinux.arch/files/rootfs/usr/share/vulkan/icd.d/arlinux_icd.json",
+          "driver_in_process_maps": true,
+          "render": {
+            "blender": "5.2.1 LTS",
+            "engine": "BLENDER_EEVEE",
+            "backend": "VULKAN",
+            "renderer": "Turnip Adreno (TM) 650",
+            "file": "/data/user/0/io.taowen.arlinux.arch/files/home/packaged-blender-final-1/BLENDER_EEVEE/render-BLENDER_EEVEE.png",
+            "bytes": 164189,
+            "rgb_min": 0.03921568766236305,
+            "rgb_max": 0.9725490808486938,
+            "alpha_min": 1.0,
+            "alpha_max": 1.0,
+            "status": "PASS"
+          },
+          "visual_inspection": "PASS",
+          "png_sha256": "b584374df228d7255651b0fbc894014f27399d048d76804b50a3d13ab9b58024"
+        },
+        "BLENDER_WORKBENCH": {
+          "returncode": 0,
+          "timed_out": false,
+          "child_reaped": true,
+          "elapsed_seconds": 7.225,
+          "executable_sha256": "6d7ea7012cd80e6ced0ee029c7935c16aa2495bfffc0634f4c9c8694e0bf7c61",
+          "vk_driver_files": "/data/user/0/io.taowen.arlinux.arch/files/rootfs/usr/share/vulkan/icd.d/arlinux_icd.json",
+          "driver_in_process_maps": true,
+          "render": {
+            "blender": "5.2.1 LTS",
+            "engine": "BLENDER_WORKBENCH",
+            "backend": "VULKAN",
+            "renderer": "Turnip Adreno (TM) 650",
+            "file": "/data/user/0/io.taowen.arlinux.arch/files/home/packaged-blender-final-1/BLENDER_WORKBENCH/render-BLENDER_WORKBENCH.png",
+            "bytes": 159457,
+            "rgb_min": 0.007843137718737125,
+            "rgb_max": 0.6470588445663452,
+            "alpha_min": 1.0,
+            "alpha_max": 1.0,
+            "status": "PASS"
+          },
+          "visual_inspection": "PASS",
+          "png_sha256": "fd210bee62c6d76a50f3587a069a6c8de8f366d92007fa01d32564b74454453b"
+        },
+        "reopen": {
+          "returncode": 0,
+          "timed_out": false,
+          "child_reaped": true,
+          "elapsed_seconds": 9.633
+        }
+      },
+      "push_constant_log": "DEVICE Turnip Adreno (TM) 650\nCASE compute-only expected=13579bdf actual=13579bdf PASS\nCASE graphics-between-bind-and-dispatch expected=13579be0 actual=13579be0 PASS\nCASE rebind-after-graphics expected=13579be1 actual=13579be1 PASS\n",
+      "workflow_cleanup": {
+        "pid": 4900,
+        "reason": "Owned workflow completed all five events; terminate to run independent renders",
+        "signal": "SIGTERM"
+      },
+      "workflow_visual_inspection": "PASS",
+      "local_artifacts": "arlinux/build/blender-arch-diagnostic/packaged-final/redmi"
+    },
+    "oneplus13": {
+      "serial": "3B1F5DE5MS12PWAV",
+      "model": "PJZ110",
+      "kernel": "6.6.89-android15-8-g7e1f3c083cc6-abogki467167594-4k",
+      "android": "16",
+      "sha256": {
+        "apk": "c08d9e7ef9c04ad2a9bffa0c3a3ccb456830dccebf7cdaab1f0519a2938c62c2",
+        "compositor": "ff7634addfce1691b4d390b786bd5257f6873f7eb072e866fda5095fd54d9663",
+        "mesa": "f58b9368bddddcc91c5d0c8d57a41d2b4a8343e517bca8793b79e98265c29bb9",
+        "blender": "6d7ea7012cd80e6ced0ee029c7935c16aa2495bfffc0634f4c9c8694e0bf7c61",
+        "runtime": "4d29216dcedd8a2d519f4f1b22adf1dc9a64b8fee0a906d9c397e9ed9d59af69"
+      },
+      "workflow": {
+        "events": [
+          {
+            "event": "modeled_and_saved",
+            "windows": [
+              [
+                2256,
+                1054
+              ]
+            ],
+            "objects": 18
+          },
+          {
+            "event": "fullscreen_requested",
+            "windows": [
+              [
+                2256,
+                1054
+              ]
+            ],
+            "objects": 18
+          },
+          {
+            "event": "fullscreen_observed",
+            "windows": [
+              [
+                2256,
+                1080
+              ]
+            ],
+            "objects": 18
+          },
+          {
+            "event": "restored_observed",
+            "windows": [
+              [
+                2254,
+                1052
+              ]
+            ],
+            "objects": 18
+          },
+          {
+            "event": "reopened_verified",
+            "windows": [
+              [
+                2254,
+                1052
+              ]
+            ],
+            "objects": 18
+          }
+        ],
+        "blender": "5.2.1 LTS",
+        "backend": "VULKAN",
+        "renderer": "Adreno (TM) 830v1"
+      },
+      "reopen": {
+        "pid": 8435,
+        "time": 1789353200.6017747,
+        "file": "/data/user/0/io.taowen.arlinux.arch/files/home/Documents/Arlinux-Blender-Check/Unified-Screwdriver.blend",
+        "blender": "5.2.1 LTS",
+        "backend": "VULKAN",
+        "renderer": "Adreno (TM) 830v1",
+        "meshes": 17,
+        "vertices": 3808,
+        "faces": 2937,
+        "materials": 6,
+        "status": "PASS"
+      },
+      "processes": {
+        "push-constants": {
+          "returncode": 0,
+          "timed_out": false,
+          "child_reaped": true,
+          "elapsed_seconds": 0.021
+        },
+        "BLENDER_EEVEE": {
+          "returncode": 0,
+          "timed_out": false,
+          "child_reaped": true,
+          "elapsed_seconds": 8.812,
+          "executable_sha256": "6d7ea7012cd80e6ced0ee029c7935c16aa2495bfffc0634f4c9c8694e0bf7c61",
+          "vk_driver_files": "/data/user/0/io.taowen.arlinux.arch/files/rootfs/usr/share/vulkan/icd.d/arlinux_icd.json",
+          "driver_in_process_maps": true,
+          "render": {
+            "blender": "5.2.1 LTS",
+            "engine": "BLENDER_EEVEE",
+            "backend": "VULKAN",
+            "renderer": "Adreno (TM) 830v1",
+            "file": "/data/user/0/io.taowen.arlinux.arch/files/home/packaged-blender-final-1/BLENDER_EEVEE/render-BLENDER_EEVEE.png",
+            "bytes": 164028,
+            "rgb_min": 0.03921568766236305,
+            "rgb_max": 0.9725490808486938,
+            "alpha_min": 1.0,
+            "alpha_max": 1.0,
+            "status": "PASS"
+          },
+          "visual_inspection": "PASS",
+          "png_sha256": "81b906abd52c6ff5cfa5e99b134241b58b61237e07c443025e2e486b781cc11b"
+        },
+        "BLENDER_WORKBENCH": {
+          "returncode": 0,
+          "timed_out": false,
+          "child_reaped": true,
+          "elapsed_seconds": 6.901,
+          "executable_sha256": "6d7ea7012cd80e6ced0ee029c7935c16aa2495bfffc0634f4c9c8694e0bf7c61",
+          "vk_driver_files": "/data/user/0/io.taowen.arlinux.arch/files/rootfs/usr/share/vulkan/icd.d/arlinux_icd.json",
+          "driver_in_process_maps": true,
+          "render": {
+            "blender": "5.2.1 LTS",
+            "engine": "BLENDER_WORKBENCH",
+            "backend": "VULKAN",
+            "renderer": "Adreno (TM) 830v1",
+            "file": "/data/user/0/io.taowen.arlinux.arch/files/home/packaged-blender-final-1/BLENDER_WORKBENCH/render-BLENDER_WORKBENCH.png",
+            "bytes": 159469,
+            "rgb_min": 0.007843137718737125,
+            "rgb_max": 0.6470588445663452,
+            "alpha_min": 1.0,
+            "alpha_max": 1.0,
+            "status": "PASS"
+          },
+          "visual_inspection": "PASS",
+          "png_sha256": "e56796a640efe2f5f7d369c19f1ee1d0e4c00bda0b53d26581c9e41fd59f45c6"
+        },
+        "reopen": {
+          "returncode": 0,
+          "timed_out": false,
+          "child_reaped": true,
+          "elapsed_seconds": 9.319
+        }
+      },
+      "push_constant_log": "DEVICE Adreno (TM) 830v1\nCASE compute-only expected=13579bdf actual=13579bdf PASS\nCASE graphics-between-bind-and-dispatch expected=13579be0 actual=13579be0 PASS\nCASE rebind-after-graphics expected=13579be1 actual=13579be1 PASS\n",
+      "workflow_cleanup": {
+        "pid": 7845,
+        "reason": "Owned workflow completed all five events; terminate to run independent renders",
+        "signal": "SIGTERM"
+      },
+      "workflow_visual_inspection": "PASS",
+      "local_artifacts": "arlinux/build/blender-arch-diagnostic/packaged-final/oneplus13"
+    }
+  }
+}
