@@ -7,29 +7,14 @@ Application ID: `io.taowen.arlinux.arch`. This APK has its own
 Android UID, private rootfs, package database and home directory. It does not
 replace the older `io.taowen.arlinux` application.
 
-## Build
+## Development
 
-```sh
-git -C /path/to/arlinux submodule update --init --recursive
-cd /path/to/arlinux
-export JAVA_HOME=/path/to/jdk21
-export ANDROID_HOME=/path/to/android-sdk
-export HYBRIS_LIB_DIR=/path/to/libhybris/install/usr/lib/hybris
-# Build the shared native graphics components once:
-tools/build.sh ndk
-tools/build.sh mesa
-distributions/arch/build.sh
-```
+This repository is consumed from `arlinux/distributions/arch`. The former
+Podman product build entrypoint has been removed; development now uses the
+parent checkout inside WSL 2.
 
-The output is `distributions/arch/build/arlinux-arch-debug.apk`. `--prepare-only` builds userspace
-assets; `--apk-only` assembles existing assets. For development, set
-`ARLINUX_DIR=/path/to/arlinux` to use a separate working checkout.
-Host requirements and the application input contract are described in
-[Arlinux](https://github.com/taowen/arlinux).
-
-To select the optional anhyprland compositor, first build the Android core in
-the parent's pinned `third_party/anhyprland`, then run
-`ARLINUX_COMPOSITOR=hyprland distributions/arch/build.sh` from Arlinux.
+The optional anhyprland compositor is pinned by the parent at
+`third_party/anhyprland`.
 Rebuild libhybris from the current source before preparing the GPU assets;
 the [integration guide](../../docs/ANHYPRLAND.md) includes the
 commands, window controls and Mali/Turnip device checks. The default compositor
