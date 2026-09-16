@@ -10,27 +10,28 @@ replace the older `io.taowen.arlinux` application.
 ## Build
 
 ```sh
-git submodule update --init --recursive
+git -C /path/to/arlinux submodule update --init --recursive
+cd /path/to/arlinux
 export JAVA_HOME=/path/to/jdk21
 export ANDROID_HOME=/path/to/android-sdk
 export HYBRIS_LIB_DIR=/path/to/libhybris/install/usr/lib/hybris
 # Build the shared native graphics components once:
-third_party/arlinux/tools/build.sh ndk
-third_party/arlinux/tools/build.sh mesa
-./build.sh
+tools/build.sh ndk
+tools/build.sh mesa
+distributions/arch/build.sh
 ```
 
-The output is `build/arlinux-arch-debug.apk`. `--prepare-only` builds userspace
+The output is `distributions/arch/build/arlinux-arch-debug.apk`. `--prepare-only` builds userspace
 assets; `--apk-only` assembles existing assets. For development, set
 `ARLINUX_DIR=/path/to/arlinux` to use a separate working checkout.
 Host requirements and the application input contract are described in
 [Arlinux](https://github.com/taowen/arlinux).
 
 To select the optional anhyprland compositor, first build the Android core in
-an [anhyprland checkout](https://github.com/taowen/anhyprland/tree/android),
-then run `ANHYPRLAND_DIR=/path/to/anhyprland ARLINUX_COMPOSITOR=hyprland ./build.sh`.
+the parent's pinned `third_party/anhyprland`, then run
+`ARLINUX_COMPOSITOR=hyprland distributions/arch/build.sh` from Arlinux.
 Rebuild libhybris from the current source before preparing the GPU assets;
-the [integration guide](third_party/arlinux/docs/ANHYPRLAND.md) includes the
+the [integration guide](../../docs/ANHYPRLAND.md) includes the
 commands, window controls and Mali/Turnip device checks. The default compositor
 remains anlabwc.
 
@@ -41,8 +42,9 @@ is compiled into this product's copy of the common runtime; it is not loaded
 as a runtime plugin. Android Activity, input, JNI, sessions, GPU selection,
 asset installation and build orchestration are shared without copied Java.
 
-The shared checkout is pinned as a Git submodule. Do not commit generated
-rootfs archives, APKs or package caches into this source repository.
+This repository is pinned by the parent Arlinux checkout under
+`distributions/arch`; it does not embed another copy of Arlinux. Do not commit
+generated rootfs archives, APKs or package caches into this source repository.
 
 ## Runtime policy
 
@@ -77,9 +79,9 @@ two platform fixes, regression test, APK identity and screenshots.
 After installing and starting the APK on a device:
 
 ```sh
-ARLINUX_DIR=third_party/arlinux tests/test-pacman-device.py --serial DEVICE
-third_party/arlinux/tests/test-product-device.py --product . --serial DEVICE
-third_party/arlinux/tests/test-teapot-device.py --serial DEVICE \
+distributions/arch/tests/test-pacman-device.py --serial DEVICE
+tests/test-product-device.py --product distributions/arch --serial DEVICE
+tests/test-teapot-device.py --serial DEVICE \
   --package io.taowen.arlinux.arch --gpu turnip
 ```
 
