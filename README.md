@@ -64,9 +64,9 @@ two platform fixes, regression test, APK identity and screenshots.
 After installing and starting the APK on a device:
 
 ```sh
-distributions/arch/tests/test-pacman-device.py --serial DEVICE
-tests/test-product-device.py --product distributions/arch --serial DEVICE
-tests/test-teapot-device.py --serial DEVICE \
+python3 distributions/arch/tests/test-pacman-device.py --serial DEVICE
+python3 tests/test-product-device.py --product distributions/arch --serial DEVICE
+python3 tests/test-teapot-device.py --serial DEVICE \
   --package io.taowen.arlinux.arch --gpu turnip
 ```
 
@@ -89,16 +89,16 @@ The APK enables `archlinuxcn` by default, including when upgrading an existing
 installation. First boot imports trust from the packaged Arch keyring and
 installs `archlinuxcn-keyring` with package signature checks enabled. It preserves
 an existing `[archlinuxcn]` stanza and its mirror selection. The repository is
-appended after the standard Arch Linux ARM repositories.
+placed before the standard Arch Linux ARM repositories so its explicitly chosen
+desktop packages take precedence.
 
 This repository supplies native aarch64 packages absent from the standard ARM
 repositories, including Blender. The APK does not bundle Blender.
 
-X300 has been tested with the original signed packages `blender 17:5.2.1-1`
-and `usd 26.05-4`. USD 26.08 is incompatible with that Blender build and causes
-an undefined-symbol error. On the tested device, `IgnorePkg = blender usd`
-keeps this pair together; remove that hold only when updating to a compatible
-pair. This hold is not part of the APK's default package configuration.
+Redmi K40 has been tested with the original signed archlinuxcn packages
+`blender 17:5.2.2-1` and `usd 26.08-1`. Startup, save/reopen and Workbench
+rendering pass with this pair. The APK does not add a package hold; future
+rolling updates must still keep Blender and USD ABI-compatible.
 
 Run the original application with `blender --gpu-backend vulkan`. The shared
 libhybris fork compensates for the tested G1-Ultra driver's missing vertex

@@ -53,8 +53,17 @@ fi
 # Refresh the product's default repository on APK upgrades too. Preserve a
 # repository already configured by the user, including their chosen mirror.
 if ! grep -q '^\[archlinuxcn\]$' "$root/etc/pacman.conf"; then
-    printf '\n' >> "$root/etc/pacman.conf"
-    cat "$root/usr/lib/arlinux/guest/archlinuxcn.conf" >> "$root/etc/pacman.conf"
+    repo_file="$root/usr/lib/arlinux/guest/archlinuxcn.conf"
+    awk -v repo="$repo_file" '
+        BEGIN {
+            while ((getline line < repo) > 0) block = block line ORS
+            close(repo)
+        }
+        !added && $0 == "[core]" { printf "%s\n", block; added = 1 }
+        { print }
+        END { if (!added) printf "\n%s", block }
+    ' "$root/etc/pacman.conf" > "$root/etc/pacman.conf.new"
+    mv "$root/etc/pacman.conf.new" "$root/etc/pacman.conf"
 fi
 cn_setup=
 if ! pacman -Q archlinuxcn-keyring >/dev/null 2>&1; then
