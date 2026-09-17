@@ -75,7 +75,8 @@ if ! pacman -Q archlinuxcn-keyring >/dev/null 2>&1; then
     cn_setup=1
 fi
 set -- xterm ttf-dejavu noto-fonts-cjk fontconfig xorg-xrdb dbus \
-    at-spi2-core wayland libx11 libxcb libxxf86vm
+    at-spi2-core wayland libx11 libxcb libxxf86vm \
+    fcitx5 fcitx5-chinese-addons fcitx5-gtk fcitx5-qt
 if [ -n "$cn_setup" ] || ! pacman -Q "$@" >/dev/null 2>&1; then
     echo 'ARLINUX:正在更新 Arch ARM 并安装桌面组件…'
     pacman -Syyu --needed --noconfirm "$@"
