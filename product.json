@@ -1,9 +1,6 @@
 {
-  "applicationId": "io.taowen.arlinux.arch",
   "name": "Arlinux Arch",
   "compositor": "hyprland",
-  "versionCode": 1,
-  "versionName": "0.1.0",
   "glibcVersion": "2.43",
   "libraryDirectories": [
     "usr/lib"
