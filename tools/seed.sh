@@ -21,3 +21,24 @@ archive="$(python3 -c 'import json,sys; x=json.load(open(sys.argv[1])); print(sy
 tar --delay-directory-restore --no-same-owner --exclude=./dev --exclude=./proc --exclude=./sys \
     --exclude=./boot --exclude=./usr/lib/modules -xzf "$archive" -C "$out"
 cp "$product/guest/mirrorlist" "$out/etc/pacman.d/mirrorlist"
+
+# Android supplies the kernel. Remove the large bare-metal firmware payload and
+# its package records while producing the seed, before any package scriptlets
+# or systemd/mkinitcpio hooks can run on the phone.
+python3 - "$out" <<'PY'
+import pathlib, shutil, sys
+root = pathlib.Path(sys.argv[1])
+shutil.rmtree(root / 'usr/lib/firmware', ignore_errors=True)
+local = root / 'var/lib/pacman/local'
+for package in local.iterdir():
+    desc = package / 'desc'
+    if not desc.is_file():
+        continue
+    lines = desc.read_text(errors='replace').splitlines()
+    try:
+        name = lines[lines.index('%NAME%') + 1]
+    except (ValueError, IndexError):
+        continue
+    if name == 'linux-aarch64' or name == 'linux-firmware' or name.startswith('linux-firmware-'):
+        shutil.rmtree(package)
+PY
