@@ -35,6 +35,12 @@ The Android right-side handle opens the hosted WeChat Input keyboard on tap and
 starts an AI voice interaction on long press. Linux applications receive its
 text through the host input path; no guest input-method process is required.
 
+First boot downloads the pinned official OpenCode Desktop ARM64 RPM, verifies
+its SHA-256 digest, installs its Arch runtime dependencies and starts the GUI as
+the default desktop application. OpenCode receives the same AT-SPI automation,
+Unicode clipboard input, AI voice prompt and asynchronous Edge TTS guidance as
+the Debian product.
+
 ## Runtime policy
 
 The seed archive URL and SHA-256 are in `rootfs.lock.json`; a changed upstream

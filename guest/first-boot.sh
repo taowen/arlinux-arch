@@ -74,9 +74,38 @@ if ! pacman -Q archlinuxcn-keyring >/dev/null 2>&1; then
     pacman -Sy --needed --noconfirm archlinuxcn-keyring
     cn_setup=1
 fi
-set -- xterm ttf-dejavu noto-fonts-cjk fontconfig xorg-xrdb dbus \
-    at-spi2-core wayland libx11 libxcb libxxf86vm
+set -- xterm curl ca-certificates ttf-dejavu noto-fonts-cjk fontconfig \
+    xorg-xrdb xorg-xprop dbus at-spi2-core python-dbus python-atspi \
+    python-gobject python-pip mpg123 wl-clipboard wtype xclip xdotool \
+    wayland libx11 libxcb libxxf86vm gtk3 libnotify nss libxss libxtst \
+    xdg-utils libsecret alsa-plugins libpulse cups libdrm mesa pango cairo
 if [ -n "$cn_setup" ] || ! pacman -Q "$@" >/dev/null 2>&1; then
     echo 'ARLINUX:正在更新 Arch ARM 并安装桌面组件…'
     pacman -Syyu --needed --noconfirm "$@"
 fi
+
+# Match Debian's OpenCode automation and asynchronous online speech support.
+# Dogtail is not packaged by Arch; keep both PyPI additions reproducible.
+if ! python3 -c 'import dogtail, edge_tts' >/dev/null 2>&1; then
+    echo 'ARLINUX:正在安装桌面自动化和在线语音进度播报组件…'
+    python3 -m pip install --break-system-packages --no-cache-dir \
+        'dogtail==1.0.5' 'edge-tts==7.2.8'
+fi
+guest=$root/usr/lib/arlinux/guest
+python_source=$root/usr/lib/arlinux/python
+mkdir -p "$python_source/arlinux"
+cp "$guest/arlinux/"*.py "$python_source/arlinux/"
+python_site=$(python3 -c 'import sys; print("python%d.%d/site-packages" % sys.version_info[:2])')
+mkdir -p "$root/usr/lib/$python_site"
+printf '/usr/lib/arlinux/python\n' > "$root/usr/lib/$python_site/arlinux.pth"
+
+"$root/bin/sh" "$guest/opencode-install.sh"
+"$root/bin/sh" "$guest/opencode-instructions.sh"
+
+mkdir -p "$root/etc/pulse/client.conf.d" "$root/etc/alsa/conf.d"
+printf 'default-server = unix:%s/runtime/pulse-native\nautospawn = no\nenable-shm = no\n' \
+    "$BIONICX_FILES" > "$root/etc/pulse/client.conf.d/arlinux.conf"
+cat > "$root/etc/alsa/conf.d/99-arlinux-pulse.conf" <<'ALSA'
+pcm.!default { type pulse }
+ctl.!default { type pulse }
+ALSA
