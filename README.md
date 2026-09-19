@@ -13,12 +13,11 @@ This repository is consumed from `arlinux/distributions/arch`. The former
 Podman product build entrypoint has been removed; development now uses the
 parent checkout inside WSL 2.
 
-The optional anhyprland compositor is pinned by the parent at
+The product uses the anhyprland compositor pinned by the parent at
 `third_party/anhyprland`.
 Rebuild libhybris from the current source before preparing the GPU assets;
 the [integration guide](../../docs/ANHYPRLAND.md) includes the
-commands, window controls and Mali/Turnip device checks. The default compositor
-remains anlabwc.
+commands, window controls and Mali/Turnip device checks.
 
 `product.json` selects package identity, glibc recipe and library/module paths.
 `tools/seed.sh` produces the distribution rootfs. `guest/first-boot.sh` owns
