@@ -1,8 +1,12 @@
 # Arlinux Arch
 
-Arch Linux ARM rootfs recipe for
-[arlinux-rootfs](https://github.com/taowen/arlinux-rootfs). It produces an
-AArch64 distribution bundle and contains no Android host build.
+Arlinux Arch is the Arch Linux ARM reference distribution for
+[arlinux-rootfs](https://github.com/taowen/arlinux-rootfs). It boots into
+OpenCode Desktop and demonstrates a rolling, pacman-managed AArch64 userspace
+on the shared Arlinux runtime.
+
+This repository contains only the Linux distribution recipe. It does not
+contain or require the Android host source.
 
 From an `arlinux-rootfs` checkout:
 
@@ -11,7 +15,23 @@ From an `arlinux-rootfs` checkout:
 ./build.sh verify out/arch.arlinux-rootfs
 ```
 
-`rootfs.lock.json` pins bootstrap inputs. `tools/seed.sh` creates the root
-filesystem, `guest/` contains guest setup and launch files, and
-`native/product-policy.h` contains the distribution-specific compatibility
-policy. Shared glibc, GPU and bundle logic belongs to `arlinux-rootfs`.
+The build produces `out/arch.arlinux-rootfs`. See the rootfs project's
+[distribution authoring guide](https://github.com/taowen/arlinux-rootfs/blob/main/docs/DISTRIBUTION-AUTHORING.md)
+for the interface implemented here.
+
+## Repository layout
+
+- `rootfs.lock.json` pins the Arch Linux ARM bootstrap archive.
+- `tools/seed.sh` extracts and minimizes the upstream rootfs.
+- `tools/post-seed.sh` initializes trusted package signing keys.
+- `guest/first-boot.sh` finishes native package setup on the device.
+- `profile.json` launches OpenCode on the host-provided display.
+- `native/product-policy.h` scopes pacman compatibility.
+
+Shared glibc, graphics, bundle, and Android integration code belongs to
+`arlinux-rootfs` or the host, not this repository.
+
+## License
+
+GPL-3.0-or-later. Arch Linux ARM packages and downloaded applications retain
+their respective licenses.

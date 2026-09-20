@@ -40,7 +40,7 @@ done
 }
 runtime_epoch=$root/var/lib/arlinux/runtime-epoch-1
 if [ ! -f "$runtime_epoch" ]; then
-    echo 'ARLINUX:正在更新基础运行库…'
+    echo 'ARLINUX:Updating the base runtime...'
     pacman -Syy --needed --noconfirm glibc coreutils bash pacman
     mkdir -p "$(dirname "$runtime_epoch")"
     : > "$runtime_epoch"
@@ -52,14 +52,14 @@ set -- xterm curl ca-certificates ttf-dejavu noto-fonts-cjk fontconfig \
     wayland libx11 libxcb libxxf86vm gtk3 libnotify nss libxss libxtst \
     xdg-utils libsecret alsa-plugins libpulse cups libdrm mesa pango cairo
 if ! pacman -Q "$@" >/dev/null 2>&1; then
-    echo 'ARLINUX:正在更新 Arch ARM 并安装桌面组件…'
+    echo 'ARLINUX:Updating Arch Linux ARM and installing desktop components...'
     pacman -Syyu --needed --noconfirm "$@"
 fi
 
 # Match Debian's OpenCode automation and asynchronous online speech support.
 # Dogtail is not packaged by Arch; keep both PyPI additions reproducible.
 if ! python3 -c 'import dogtail, edge_tts' >/dev/null 2>&1; then
-    echo 'ARLINUX:正在安装桌面自动化和在线语音进度播报组件…'
+    echo 'ARLINUX:Installing desktop automation and online speech support...'
     python3 -m pip install --break-system-packages --no-cache-dir \
         'dogtail==1.0.5' 'edge-tts==7.2.8'
 fi
