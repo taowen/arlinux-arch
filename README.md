@@ -12,10 +12,10 @@ From an `arlinux-rootfs` checkout:
 
 ```bash
 ./build.sh build arch
-./build.sh verify out/arch.arlinux-rootfs
+./build.sh verify out/arch.zip
 ```
 
-The build produces `out/arch.arlinux-rootfs`. See the rootfs project's
+The build produces `out/arch.zip`. See the rootfs project's
 [distribution authoring guide](https://github.com/taowen/arlinux-rootfs/blob/main/docs/DISTRIBUTION-AUTHORING.md)
 for the interface implemented here.
 
