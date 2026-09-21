@@ -47,7 +47,7 @@ if [ ! -f "$runtime_epoch" ]; then
     exit 75
 fi
 set -- xterm curl ca-certificates ttf-dejavu noto-fonts-cjk fontconfig \
-    xorg-xrdb xorg-xprop dbus at-spi2-core python-dbus python-atspi \
+    xorg-xrdb xorg-xprop dbus at-spi2-core ibus python-dbus python-atspi \
     python-gobject python-pip mpg123 wl-clipboard wtype xclip xdotool \
     wayland libx11 libxcb libxxf86vm gtk3 libnotify nss libxss libxtst \
     xdg-utils libsecret alsa-plugins libpulse cups libdrm mesa pango cairo

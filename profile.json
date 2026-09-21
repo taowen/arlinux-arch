@@ -29,7 +29,10 @@
       "PATH": "${RUNTIME}/usr/sbin:${RUNTIME}/usr/bin:${RUNTIME}/sbin:${RUNTIME}/bin:/product/bin:/system/bin",
       "LANG": "C.UTF-8",
       "LC_ALL": "C.UTF-8",
-      "ACCESSIBILITY_ENABLED": "1"
+      "ACCESSIBILITY_ENABLED": "1",
+      "GTK_IM_MODULE": "ibus",
+      "QT_IM_MODULE": "ibus",
+      "XMODIFIERS": "@im=ibus"
     }
   }
 }
