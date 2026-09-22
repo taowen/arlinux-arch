@@ -26,7 +26,6 @@ for the interface implemented here.
 - `tools/post-seed.sh` initializes trusted package signing keys.
 - `guest/first-boot.sh` finishes native package setup on the device.
 - `profile.json` launches OpenCode on the host-provided display.
-- `native/product-policy.h` scopes pacman compatibility.
 
 Shared glibc, graphics, bundle, and Android integration code belongs to
 `arlinux-rootfs` or the host, not this repository.
