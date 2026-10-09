@@ -2,8 +2,10 @@
 
 Arlinux Arch is the Arch Linux ARM reference distribution for
 [arlinux-rootfs](https://github.com/taowen/arlinux-rootfs). It boots into
-OpenCode Desktop and demonstrates a rolling, pacman-managed AArch64 userspace
+a desktop session and demonstrates a rolling, pacman-managed AArch64 userspace
 on the shared Arlinux runtime.
+OpenCode is available from Apps and the AI voice entry. Its first launch
+downloads and installs the pinned official package; later launches reuse it.
 
 This repository contains only the Linux distribution recipe. It does not
 contain or require the Android host source.
