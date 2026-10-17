@@ -37,33 +37,11 @@ done
 [ -f "$root/etc/pacman.d/gnupg/arlinux-populated" ] || {
     echo 'Bundle is missing its prebuilt pacman trust database' >&2; exit 1;
 }
-runtime_epoch=$root/var/lib/arlinux/runtime-epoch-1
-if [ ! -f "$runtime_epoch" ]; then
-    echo 'ARLINUX:Updating the base runtime...'
-    pacman -Syy --needed --noconfirm glibc coreutils bash pacman
-    mkdir -p "$(dirname "$runtime_epoch")"
-    : > "$runtime_epoch"
-    exit 75
-fi
-/bin/sh /usr/lib/arlinux/install-mesa-arch.sh
-set -- xterm curl ca-certificates ttf-dejavu noto-fonts-cjk fontconfig \
-    xorg-xrdb xorg-xprop dbus at-spi2-core ibus python-dbus python-atspi \
-    python-gobject python-pip mpg123 wl-clipboard wtype xclip xdotool \
-    wayland libx11 libxcb libxxf86vm gtk3 libnotify nss libxss libxtst \
-    xdg-utils libsecret alsa-plugins libpulse cups libdrm pango cairo
-if ! pacman -Q "$@" >/dev/null 2>&1; then
-    echo 'ARLINUX:Updating Arch Linux ARM and installing desktop components...'
-    pacman -Syyu --needed --noconfirm "$@"
-fi
-
-# Match Debian's OpenCode automation and asynchronous online speech support.
-# Dogtail is not packaged by Arch; keep both PyPI additions reproducible.
-if ! python3 -c 'import dogtail, edge_tts' >/dev/null 2>&1; then
-    echo 'ARLINUX:Installing desktop automation and online speech support...'
-    python3 -m pip install --break-system-packages --no-cache-dir \
-        --index-url https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple \
-        'dogtail==1.0.5' 'edge-tts==7.2.8'
-fi
+# Published desktops contain all packages; never use the network during setup.
+[ -f /usr/share/arlinux/offline-desktop ] || {
+    echo 'Incomplete desktop bundle: import a prepared offline distribution ZIP.' >&2
+    exit 1
+}
 guest=$root/usr/lib/arlinux/guest
 python_source=$root/usr/lib/arlinux/python
 mkdir -p "$python_source/arlinux"

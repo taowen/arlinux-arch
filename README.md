@@ -13,7 +13,10 @@ contain or require the Android host source.
 From an `arlinux-rootfs` checkout:
 
 ```bash
-./build.sh build arch
+./build.sh prepare arch
+# Install build/offline/arch/prepare.zip in a disposable build-only instance,
+# then export its prepared rootfs (never a personal home or application state).
+./build.sh offline arch /path/to/build-only-rootfs.tar
 ./build.sh verify out/arch.zip
 ```
 
@@ -26,7 +29,8 @@ for the interface implemented here.
 - `rootfs.lock.json` pins the Arch Linux ARM bootstrap archive.
 - `tools/seed.sh` extracts and minimizes the upstream rootfs.
 - `tools/post-seed.sh` initializes trusted package signing keys.
-- `guest/first-boot.sh` finishes native package setup on the device.
+- `guest/build-desktop.sh` prepares packages in a disposable build instance.
+- `guest/first-boot.sh` applies device-local configuration without network access.
 - `profile.json` launches OpenCode on the host-provided display.
 
 Shared glibc, graphics, bundle, and Android integration code belongs to
