@@ -17,7 +17,7 @@ Builds and releases follow the [canonical build and release guide](https://githu
 - `rootfs.lock.json` pins the Arch Linux ARM bootstrap archive.
 - `tools/seed.sh` extracts and minimizes the upstream rootfs.
 - `tools/post-seed.sh` initializes trusted package signing keys.
-- `guest/build-desktop.sh` prepares packages in a disposable Linux/WSL QEMU chroot.
+- `guest/build-desktop.sh` prepares packages in a disposable Linux chroot on the build runner.
 - `guest/first-boot.sh` applies device-local configuration without network access.
 - `profile.json` launches OpenCode on the host-provided display.
 
