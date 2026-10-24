@@ -31,7 +31,8 @@ ldconfig
 # and desktop-cache hooks, but omit Linux boot/service-account operations.
 mkdir -p "$root/etc/pacman.d/hooks"
 for hook in 20-systemd-sysusers.hook 21-systemd-tmpfiles.hook \
-            10-openssh-mark-sshd-for-restart.hook; do
+            10-openssh-mark-sshd-for-restart.hook \
+            60-mkinitcpio-remove.hook 90-mkinitcpio-install.hook; do
     ln -sfn /dev/null "$root/etc/pacman.d/hooks/$hook"
 done
 [ -f "$root/etc/pacman.d/gnupg/arlinux-populated" ] || {
@@ -42,16 +43,7 @@ done
     echo 'Incomplete desktop bundle: import a prepared offline distribution ZIP.' >&2
     exit 1
 }
-guest=$root/usr/lib/arlinux/guest
-python_source=$root/usr/lib/arlinux/python
-mkdir -p "$python_source/arlinux"
-cp "$guest/arlinux/"*.py "$python_source/arlinux/"
-python_site=$(python3 -c 'import sys; print("python%d.%d/site-packages" % sys.version_info[:2])')
-mkdir -p "$root/usr/lib/$python_site"
-printf '/usr/lib/arlinux/python\n' > "$root/usr/lib/$python_site/arlinux.pth"
-
-"$root/bin/sh" "$guest/opencode-instructions.sh"
-
+# Guest Tools supplies OpenCode integration and the arlinux Python package.
 mkdir -p "$root/etc/pulse/client.conf.d" "$root/etc/alsa/conf.d"
 printf 'default-server = unix:%s/runtime/pulse-native\nautospawn = no\nenable-shm = no\n' \
     "$BIONICX_FILES" > "$root/etc/pulse/client.conf.d/arlinux.conf"

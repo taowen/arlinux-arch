@@ -32,7 +32,8 @@ ldconfig
 # and desktop-cache hooks, but omit Linux boot/service-account operations.
 mkdir -p "$root/etc/pacman.d/hooks"
 for hook in 20-systemd-sysusers.hook 21-systemd-tmpfiles.hook \
-            10-openssh-mark-sshd-for-restart.hook; do
+            10-openssh-mark-sshd-for-restart.hook \
+            60-mkinitcpio-remove.hook 90-mkinitcpio-install.hook; do
     ln -sfn /dev/null "$root/etc/pacman.d/hooks/$hook"
 done
 [ -f "$root/etc/pacman.d/gnupg/arlinux-populated" ] || {
@@ -64,19 +65,9 @@ if ! python3 -c 'import dogtail, edge_tts' >/dev/null 2>&1; then
     python3 -m pip install --break-system-packages --no-cache-dir \
         'dogtail==1.0.5' 'edge-tts==7.2.8'
 fi
-guest=$root/usr/lib/arlinux/guest
-python_source=$root/usr/lib/arlinux/python
-mkdir -p "$python_source/arlinux"
-cp "$guest/arlinux/"*.py "$python_source/arlinux/"
-python_site=$(python3 -c 'import sys; print("python%d.%d/site-packages" % sys.version_info[:2])')
-mkdir -p "$root/usr/lib/$python_site"
-printf '/usr/lib/arlinux/python\n' > "$root/usr/lib/$python_site/arlinux.pth"
-
-"$root/bin/sh" "$guest/opencode-instructions.sh"
-
-mkdir -p "$root/etc/pulse/client.conf.d" "$root/etc/alsa/conf.d"
-printf 'default-server = unix:%s/runtime/pulse-native\nautospawn = no\nenable-shm = no\n' \
-    "$BIONICX_FILES" > "$root/etc/pulse/client.conf.d/arlinux.conf"
+# Guest Tools owns OpenCode and the arlinux Python package. The instance's
+# first boot supplies its Android PulseAudio socket, which is unknown here.
+mkdir -p "$root/etc/alsa/conf.d"
 cat > "$root/etc/alsa/conf.d/99-arlinux-pulse.conf" <<'ALSA'
 pcm.!default { type pulse }
 ctl.!default { type pulse }
